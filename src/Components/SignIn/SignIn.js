@@ -2,6 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./SignIn.css";
 
+const emailPattern = new RegExp(
+  /^([a-zA-Z0-9]{2,})+(@[a-zA-Z0-9]{2,})+\.([A-Za-z]{2,})+$/
+);
+const passwordPattern = new RegExp(/(?=.*[A-Z])(?=.*[a-z])[A-Za-z0-9]{8,}$/);
+const namesPattern = new RegExp(/^[A-Z][a-z]{2,}$/);
+
 class SignIn extends React.Component {
   state = {
     email: "",
@@ -15,8 +21,16 @@ class SignIn extends React.Component {
     this.setState({ [e.target.name]: e.target.checked });
   };
   onSubmit = () => {
-    console.log(this.state);
-    alert("Check console");
+    if (!emailPattern.test(this.state.email)) {
+      alert("Enter valid email!");
+    } else if (!passwordPattern.test(this.state.password)) {
+      alert(
+        "Password should have at least 8 symbols, 1 uppercase and 1 lowercase letters!"
+      );
+    } else {
+      console.log(this.state);
+      alert("Check console");
+    }
   };
   render() {
     return (
